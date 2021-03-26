@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Line, Circle } from 'react-native-svg';
@@ -16,14 +16,16 @@ export default function Welcome() {
         AR: require('../assets/fonts/AR.otf'),
 
       });
+      useEffect(() => {
+        setTimeout(() => {
+            navigation.navigate('SetMap');
+        }, 3000);
+      },[]);
+
       if (!fontLoaded) {
         return null;
       }
-      useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('#');
-        }, 3000);
-      });
+      
     
    
     return (

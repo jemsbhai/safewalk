@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Welcome from './src/screens/welcome';
+import SelectTime from './src/screens/selectTime';
+import SetMap from './src/screens/setMap';
 
 
 
@@ -17,6 +19,16 @@ function MyStack() {
       <Stack.Screen 
         name="Welcome" 
         component={Welcome} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="SelectTime" 
+        component={SelectTime} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="SetMap" 
+        component={SetMap} 
         options={{ headerShown: false}} 
       />
       
