@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Line, Circle } from 'react-native-svg';
@@ -16,7 +16,20 @@ export default function SelectTime({route}) {
         AR: require('../assets/fonts/AR.otf'),
 
       });
-      const { origin, stop, destination } = route.params;
+      const [stopText2, setStopText2] = useState('');
+      const { origin, stop, destination, originText, stopText, destinationText, skip } = route.params;
+      useEffect(()=>{
+          if(skip){
+             setStopText2('-');
+          }
+          else{
+              setStopText2(stopText);
+          }
+          setTimeout(() => {
+            navigation.navigate('ViewMap',{origin,stop,destination});
+          }, 7000);
+          
+      })
       if (!fontLoaded) {
         return null;
       }
@@ -40,14 +53,14 @@ export default function SelectTime({route}) {
                   <View style={{elevation:3, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%'}}>
                       <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>Original Location</Text>
                       <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#9F9F9F', 
-                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{origin}</Text></TouchableOpacity>
+                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{originText}</Text></TouchableOpacity>
                   </View>
                   <Image source={require('../assets/arrow1.png')} style={{height:'10%', width:'70%', resizeMode:'contain', alignSelf:'center'}}></Image>
 
                   <View style={{elevation:3, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%'}}>
                       <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>Stop Location</Text>
-                      <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#9F9F9F', 
-                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{stop}</Text></TouchableOpacity>
+                     <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#9F9F9F', 
+                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{stopText2}</Text></TouchableOpacity>
                       
                   </View>
                   <Image source={require('../assets/arrow2.png')} style={{height:'10%', width:'50%', resizeMode:'contain', alignSelf:'center'}}></Image>
@@ -55,7 +68,7 @@ export default function SelectTime({route}) {
                   <View style={{elevation:3, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%'}}>
                       <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>Destination Location</Text>
                       <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#9F9F9F', 
-                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{destination}</Text></TouchableOpacity>
+                      paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{destinationText}</Text></TouchableOpacity>
                   </View>
                   <Text style={{marginTop:'5%', fontFamily:'AR', fontSize:15, textAlign:'center'}}>Finding your safest route...</Text>
               </View>

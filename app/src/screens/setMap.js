@@ -19,9 +19,10 @@ export default function SetMap() {
 
       });
     const [marker,setMarker] = useState(null);
-    const [locText,setLocText] = useState('Select on the map');
+    const [locText,setLocText] = useState('Select on map');
     const [origin,setOrigin] = useState(null);
     const [stop,setStop] = useState(null);
+    const [skip,setSkip] = useState(false);
     const [destination,setDestination] = useState(null);
 
 
@@ -29,16 +30,20 @@ export default function SetMap() {
     const [stepLabel, setStepLabel] = useState('Original Location');
     const _setLocation = (loc) =>{
         if(step==0){
+            setLocText('Select on map');
             setOrigin(loc);
+            setStep(loc);
             setLocText(loc.latlng.latitude.toString()+","+loc.latlng.longitude.toString());
             setStep(1);
         }
         else if(step==1){
+            setLocText('Select on map');
             setStop(loc);
             setLocText(loc.latlng.latitude.toString()+","+loc.latlng.longitude.toString());
             setStep(2);
         }
         else if(step==2){
+            setLocText('Select on map');
             setDestination(loc);
             setLocText(loc.latlng.latitude.toString()+","+loc.latlng.longitude.toString());
             setStep(3);
@@ -47,13 +52,17 @@ export default function SetMap() {
     useEffect(()=>{
         if(step==1){
             setStepLabel('Stop Location');
+            setLocText('Select on map');
         }
         else if(step==2){
             setStepLabel('Destination Location');
+            setLocText('Select on map');
         }
         else if(step==3){
             setStepLabel('Complete');
-            navigation.navigate('SelectTime',{origin:`${origin.latlng.latitude.toString()},${origin.latlng.longitude.toString()}`,stop:`${stop.latlng.latitude.toString()},${stop.latlng.longitude.toString()}`,destination:`${destination.latlng.latitude.toString()},${destination.latlng.longitude.toString()}`});
+            navigation.navigate('SelectTime',{originText:`${origin.latlng.latitude.toString()},${origin.latlng.longitude.toString()}`, origin:origin,
+            stopText:`${stop.latlng.latitude.toString()},${stop.latlng.longitude.toString()}`, stop:stop, skip:skip,
+            destinationText:`${destination.latlng.latitude.toString()},${destination.latlng.longitude.toString()}`, destination:destination});
         }
         
     },[step]);
@@ -78,7 +87,10 @@ export default function SetMap() {
               </View>
          
                 <View style={{elevation:3, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%', marginTop:'-55%'}}>
-                      <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>{stepLabel}</Text>
+                      <View style={{flexDirection:'row', display:'flex'}}>
+                        <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>{stepLabel}</Text>
+                      {step==1 &&<TouchableOpacity onPress={()=>{setStep(2);setStop(marker);setSkip(true)}}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', marginLeft:'65%', color:'#83C3FF', marginBottom:'1.5%'}}>Skip</Text></TouchableOpacity>}
+                     </View>
                       <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#9F9F9F', 
                       paddingTop:'2.5%', backgroundColor:'#E4E4E4', borderRadius:20, width:'90%', alignSelf:'center'}}>{locText}</Text></TouchableOpacity>
                   </View>
@@ -97,6 +109,7 @@ export default function SetMap() {
           
                 {marker &&
                 <Marker coordinate={marker.latlng} pinColor="red" ></Marker>}
+                
               
                     
             

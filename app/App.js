@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from './src/screens/welcome';
 import SelectTime from './src/screens/selectTime';
 import SetMap from './src/screens/setMap';
+import ViewMap from './src/screens/viewMap';
 
 
 
@@ -29,6 +30,11 @@ function MyStack() {
       <Stack.Screen 
         name="SetMap" 
         component={SetMap} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="ViewMap" 
+        component={ViewMap} 
         options={{ headerShown: false}} 
       />
       
