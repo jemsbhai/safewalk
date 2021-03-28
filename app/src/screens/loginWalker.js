@@ -11,9 +11,8 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 
-export default function SignUpWalker({}) {
+export default function LoginWalker({}) {
     const navigation = useNavigation();
-    const [stepLabel, setStepLabel] = useState('Next');
     const [fontLoaded] = useFonts({
         BR: require('../assets/fonts/BR.otf'),
         AR: require('../assets/fonts/AR.otf'),
@@ -65,30 +64,18 @@ export default function SignUpWalker({}) {
         <View style={styles.container}>
             <View style={{ marginTop: '-30%'}}>
             <Image source={require('../assets/safewh.png')} style={{height:450, width:600, resizeMode:'contain', alignSelf:'center'}}></Image>
-              <View style={{position:'absolute', zIndex:2, top:'21%', alignSelf:'center'}}>
+              <View style={{position:'absolute', zIndex:2, top:'23%', alignSelf:'center'}}>
               <Text style={{fontFamily:'AR', fontSize:20, color:'#FFF', textAlign:'left'}}>Help others feel safe by becoming a...</Text>
                 <Text style={{fontFamily:'BR', fontSize:90, color:'#FFF', textAlign:'center', marginTop:'-2.5%'}}>SAFEWALKER</Text>
               </View>
               <View style={{marginTop:'10%', backgroundColor:'#FFF', alignSelf:'center', width:'100%'}}>
-                  {stepLabel=='Next' &&<View>
-                 <TextInput style={{borderColor:'#83C3FF', width:'80%', borderRadius:10, borderWidth:1, alignSelf:'center', fontSize:20, paddingLeft:'5%', paddingVertical:'2.5%'}} placeholder={'Full name'} placeholderTextColor={'#83C3FF'}></TextInput>
-                 <TextInput style={{borderColor:'#83C3FF', width:'80%', borderRadius:10, borderWidth:1, alignSelf:'center', fontSize:20, paddingLeft:'5%', paddingVertical:'2.5%', marginTop:'2.5%'}} placeholder={'SSN'} placeholderTextColor={'#83C3FF'}></TextInput>
-                 <TextInput style={{borderColor:'#83C3FF', width:'80%', borderRadius:10, borderWidth:1, alignSelf:'center', fontSize:20, paddingLeft:'5%', paddingVertical:'2.5%', marginTop:'2.5%'}} placeholder={'Employer'} placeholderTextColor={'#83C3FF'}></TextInput>
+                 <View>
                  <TextInput style={{borderColor:'#83C3FF', width:'80%', borderRadius:10, borderWidth:1, alignSelf:'center', fontSize:20, paddingLeft:'5%', paddingVertical:'2.5%', marginTop:'2.5%'}} placeholder={'E-mail address'} placeholderTextColor={'#83C3FF'}></TextInput>
                  <TextInput style={{borderColor:'#83C3FF', width:'80%', borderRadius:10, borderWidth:1, alignSelf:'center', fontSize:20, paddingLeft:'5%', paddingVertical:'2.5%', marginTop:'2.5%'}} placeholder={'Password'} placeholderTextColor={'#83C3FF'}></TextInput>
-                </View>}
-                {stepLabel=='Signup' &&<View>
-                    <View style={{width:'70%', borderColor:'#83C3FF', height:100, borderWidth:2, borderStyle:'dotted', alignSelf:'center', borderRadius:10}}>
-                        {!image&&<TouchableOpacity onPress={()=>pickImage(1)} style={{paddingVertical:'12%', alignSelf:'center'}}><Text style={{fontFamily:'AR', color:"#83C3FF", textAlign:'center'}}>Upload a Valid ID (i.e Social Security Card, Driver's License, Passport)</Text></TouchableOpacity>}
-                        {image && <Image source={{ uri: image }} style={{ width: 285, height: 120, borderRadius:10 }} />}
-                    </View>
-                    <View style={{width:'70%', borderColor:'#83C3FF', height:100, borderWidth:2, borderStyle:'dotted', alignSelf:'center', borderRadius:10, marginTop:'10%'}}>
-                        {!eimage&&<TouchableOpacity onPress={()=>pickImage(2)} style={{paddingVertical:'12%', alignSelf:'center'}}><Text style={{fontFamily:'AR', color:"#83C3FF", textAlign:'center'}}>Upload your Employee ID</Text></TouchableOpacity>}
-                        {eimage && <Image source={{ uri: eimage }} style={{ width: 285, height: 120, borderRadius:10 }} />}
-                    </View>
-                    </View>}
-                 <TouchableOpacity onPress={()=>{if(stepLabel=='Next'){setStepLabel('Signup')}else{navigation.navigate('LoginWalker')}}}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', alignSelf:'center', backgroundColor:'#83C3FF', color:'#FFF', width:'70%', paddingVertical:'4.5%', borderRadius:10, elevation:2, marginTop:'15%'}}>
-                     {stepLabel}
+                </View>
+       
+                 <TouchableOpacity onPress={()=>navigation.navigate('WalkerHome')}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', alignSelf:'center', backgroundColor:'#83C3FF', color:'#FFF', width:'70%', paddingVertical:'4.5%', borderRadius:10, elevation:2, marginTop:'15%'}}>
+                     Login
                  </Text></TouchableOpacity>
   
 

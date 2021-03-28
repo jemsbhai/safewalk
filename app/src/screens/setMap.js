@@ -110,7 +110,7 @@ export default function SetMap() {
                 latitudeDelta: .005,
                 longitudeDelta: .005
                 }} 
-                onPress={(e) => {setMarker({ latlng: e.nativeEvent.coordinate  });_setLocation({ latlng: e.nativeEvent.coordinate  });}}
+                onPress={(e) => {setMarker({ latlng: e.nativeEvent.coordinate  });_setLocation({ latlng: e.nativeEvent.coordinate  });console.log(marker)}}
                >
           
                 {marker &&

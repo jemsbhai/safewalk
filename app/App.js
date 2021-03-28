@@ -10,6 +10,9 @@ import ReportIncident from './src/screens/reportIncident';
 import Join from './src/screens/join';
 import SafeWalker from './src/screens/safewalker';
 import SignUpWalker from './src/screens/signupWalker';
+import LoginWalker from './src/screens/loginWalker';
+import WalkerHome from './src/screens/walkerHome';
+import WalkerMap from './src/screens/walkerMap';
 
 
 
@@ -39,6 +42,21 @@ function MyStack() {
       <Stack.Screen 
         name="SignUpWalker" 
         component={SignUpWalker} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="LoginWalker" 
+        component={LoginWalker} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="WalkerHome" 
+        component={WalkerHome} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="WalkerMap" 
+        component={WalkerMap} 
         options={{ headerShown: false}} 
       />
       <Stack.Screen 

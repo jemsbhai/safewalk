@@ -38,7 +38,7 @@ export default function SafeWalker({}) {
                  <TouchableOpacity onPress={()=>{navigation.navigate('SignUpWalker')}}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', alignSelf:'center', backgroundColor:'#83C3FF', color:'#FFF', width:'70%', paddingVertical:'4.5%', borderRadius:10, elevation:1, marginTop:'5%'}}>
                      Sign Up
                  </Text></TouchableOpacity>
-                 <TouchableOpacity><Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', alignSelf:'center', borderColor:'#83C3FF', borderWidth:2, backgroundColor:'#FFF', color:'#83C3FF', width:'70%', paddingVertical:'4.5%', borderRadius:10, elevation:1, marginTop:'5%'}}>
+                 <TouchableOpacity onPress={()=>{navigation.navigate('LoginWalker')}}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', alignSelf:'center', borderColor:'#83C3FF', borderWidth:2, backgroundColor:'#FFF', color:'#83C3FF', width:'70%', paddingVertical:'4.5%', borderRadius:10, elevation:1, marginTop:'5%'}}>
                      Login
                  </Text></TouchableOpacity>
 

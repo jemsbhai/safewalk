@@ -29,7 +29,7 @@ export default function Join({}) {
             <View style={{ marginTop: '-50%'}}>
             <Image source={require('../assets/header.png')} style={{height:'40%', width:'105%', resizeMode:'contain', alignSelf:'center'}}></Image>
               <View style={{position:'absolute', zIndex:2, top:'25%', alignSelf:'center'}}>
-                <Text style={{fontFamily:'BR', fontSize:90, color:'#FFF', textAlign:'center', marginTop:'-10%'}}>Welcome</Text>
+                <Text style={{fontFamily:'BR', fontSize:60, color:'#FFF', textAlign:'center', marginTop:'-10%'}}>Welcome</Text>
               </View>
               <View style={{marginTop:'-1.5%', backgroundColor:'#FFF', alignSelf:'center', width:'100%'}}>
                  
