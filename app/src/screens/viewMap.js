@@ -8,6 +8,8 @@ import MapView, { Marker, Polygon, Polyline } from 'react-native-maps'
 import * as Location from 'expo-location';
 import {Modal, FAB, Portal, Provider, Avatar } from 'react-native-paper';
 import QRCode from 'react-native-qrcode-svg';
+import { TextInput } from 'react-native-gesture-handler';
+import { ToastAndroid } from 'react-native';
 
 
 
@@ -26,12 +28,46 @@ export default function ViewMap({route}) {
     const onStateChange = ({ open }) => setState({ open });
     const { open } = state;
     const [visible, setVisible] = useState(false);
+    const [number, setNumber] = useState('');
       const showModal = () => {setVisible(true);}
       const hideModal = () => {setVisible(false);}
+      const [visible2, setVisible2] = useState(false);
+      const showModal2 = () => {setVisible2(true);}
+      const hideModal2 = () => {setVisible2(false);}
     const  ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
       }
- 
+      
+      const _sendStatus = (num) => {
+        let data = {"token" : "hackers",
+        "receiver" : num,
+        "message" : `Hi, your friend John Doe is at https://www.google.com/maps/place/${markers[0].latitude},${markers[0].longitude}`
+        }
+        fetch('https://us-central1-aiot-fit-xlab.cloudfunctions.net/sendsms', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          if(data.result=="sent successfully"){
+            ToastAndroid.showWithGravityAndOffset(
+              'Sent!',
+              ToastAndroid.LONG,
+              ToastAndroid.BOTTOM,
+              25,
+              50
+            )
+            hideModal2();
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }
 
 
       if (!fontLoaded) {
@@ -101,7 +137,7 @@ export default function ViewMap({route}) {
               icon: 'email',
               color:'#0085FF',
               label: 'Share my location with SafeContact',
-              onPress: () => console.log('SafeContact'),
+              onPress: () => showModal2(),
             },
             {
               icon: 'alert-plus',
@@ -134,6 +170,15 @@ export default function ViewMap({route}) {
     />
     <TouchableOpacity onPress={()=>navigation.navigate('SetMap')}><Text style={{width:'70%', borderRadius:10, paddingHorizontal:'5%', fontFamily:'AR', color:'#83C3FF', backgroundColor:'#FFF', 
     borderColor:'#83C3FF', borderWidth:1, alignSelf:'center', textAlign:'center', paddingVertical:'2.5%'}}> Rate and Exit</Text></TouchableOpacity>
+        </Modal>
+        <Modal visible={visible2} onDismiss={hideModal2} 
+         contentContainerStyle={{borderRadius:10, height:300, width:'80%', borderColor:'#83C3FF', backgroundColor:'#FFF' ,elevation:3, alignSelf:'center', marginTop:'20%', alignContent:'center'}}>
+          <Text style={{fontFamily:'AR', fontSize:18, textAlign:'center', color:'#000', fontWeight:'bold'}}>Enter a SafeContact</Text>
+          <Text style={{fontFamily:'AR', fontSize:15, textAlign:'center', color:'#000', width:'80%', alignSelf:'center'}}>Your SafeContact is an emergency contact you'd like to share your location status with</Text>
+          <TextInput value={number} onChangeText={(e)=>setNumber(e)} placeholder='XXX XXX-XXXX' style={{fontFamily:'AR', alignSelf:'center', textAlign:'center', borderRadius:10, paddingVertical:'5%'}}></TextInput>
+ 
+    <TouchableOpacity onPress={()=>_sendStatus(number)}><Text style={{width:'70%', borderRadius:10, paddingHorizontal:'5%', fontFamily:'AR', color:'#83C3FF', backgroundColor:'#FFF', 
+    borderColor:'#83C3FF', borderWidth:1, alignSelf:'center', textAlign:'center', paddingVertical:'2.5%'}}> Send Status</Text></TouchableOpacity>
         </Modal>
       </Portal>
     </Provider>
