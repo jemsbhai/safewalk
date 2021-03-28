@@ -27,7 +27,7 @@ export default function SelectTime({route}) {
           }
           setTimeout(() => {
             navigation.navigate('ViewMap',{origin,stop,destination});
-          }, 7000);
+          }, 2000);
           
       })
       if (!fontLoaded) {

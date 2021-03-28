@@ -6,6 +6,7 @@ import { Icon } from 'react-native-elements'
 import { useFonts } from 'expo-font';
 import MapView, { Marker, Polygon, Polyline } from 'react-native-maps'
 import * as Location from 'expo-location';
+import { FAB, Portal, Provider } from 'react-native-paper';
 
 
 
@@ -18,13 +19,16 @@ export default function SetMap() {
         AR: require('../assets/fonts/AR.otf'),
 
       });
+    const [elevation, setElevation] = useState(3);
     const [marker,setMarker] = useState(null);
     const [locText,setLocText] = useState('Select on map');
     const [origin,setOrigin] = useState(null);
     const [stop,setStop] = useState(null);
     const [skip,setSkip] = useState(false);
     const [destination,setDestination] = useState(null);
-
+    const [state, setState] = useState({ open: false });
+    const onStateChange = ({ open }) => setState({ open });
+    const { open } = state;
 
     const [step, setStep] = useState(0);
     const [stepLabel, setStepLabel] = useState('Original Location');
@@ -78,15 +82,17 @@ export default function SetMap() {
    
     return (
         <View style={styles.container}>
-            <View style={{  width:'100%',marginTop:'-25%', marginLeft:'-1%'}}>
+            <Provider>
+      <Portal>
+            <View style={{  width:'100%',marginTop:'-30%', marginLeft:'-1%'}}>
             <Image source={require('../assets/header.png')} style={{height:'70%', width:'105%', resizeMode:'contain', alignSelf:'center'}}></Image>
-              <View style={{position:'absolute', zIndex:4, top:'20%', alignSelf:'center'}}>
-              <Text style={{fontFamily:'AR', fontSize:30, color:'#FFF', textAlign:'left'}}>So you want to go on a...</Text>
+              <View style={{position:'absolute', zIndex:2, top:'25%', alignSelf:'center'}}>
+              <Text style={{fontFamily:'AR', fontSize:20, color:'#FFF', textAlign:'left'}}>So you want to go on a...</Text>
                 <Text style={{fontFamily:'BR', fontSize:205, color:'#FFF', textAlign:'center', marginTop:'-10%'}}>Walk</Text>
               </View>
               </View>
          
-                <View style={{elevation:3, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%', marginTop:'-55%'}}>
+                <View style={{elevation: elevation, borderRadius:10,  width:'90%', backgroundColor:'#FFF', alignSelf:'center', paddingVertical:'5%', marginTop:'-60%'}}>
                       <View style={{flexDirection:'row', display:'flex'}}>
                         <Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', paddingLeft:'5%', color:'#0085FF', marginBottom:'1.5%'}}>{stepLabel}</Text>
                       {step==1 &&<TouchableOpacity onPress={()=>{setStep(2);setStop(marker);setSkip(true)}}><Text style={{fontFamily:'AR', fontSize:20, textAlign:'left', marginLeft:'65%', color:'#83C3FF', marginBottom:'1.5%'}}>Skip</Text></TouchableOpacity>}
@@ -115,7 +121,33 @@ export default function SetMap() {
             
             </MapView>
             </View>
-         
+            <FAB.Group
+          open={open}
+          color="#FFF"
+          fabStyle={{backgroundColor:'#0085FF'}}
+          icon={open ? 'close' : 'dots-horizontal'}
+          actions={[
+            
+            
+            {
+              icon: 'alert-plus',
+              color:'#0085FF',
+              label: 'Report an incident',
+              onPress: () => navigation.navigate('ReportIncident'),
+            },
+          ]}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (!open) {
+              setElevation(0)
+            }
+            else if (open) {
+                setElevation(3)
+            }
+          }}
+        />
+      </Portal>
+    </Provider>
         </View>
     );
 

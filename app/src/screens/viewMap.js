@@ -47,10 +47,37 @@ export default function ViewMap({route}) {
                   </View>
                   <View>
                   </View>
-            <View style={{position:'absolute', width:'100%', zIndex:4}}>
+            <View style={{position:'absolute', width:'100%', height:'100%', zIndex:4}}>
               <Text> </Text>
+              
               <Provider>
       <Portal>
+        <View>
+          <View style={styles.mapContainer}>
+            <MapView style={styles.map}
+             style={styles.map}
+             initialRegion={{
+             latitude:37.71848102153304, 
+             longitude: -122.17900091737451,
+             latitudeDelta: .005,
+             longitudeDelta: .005
+             }} 
+             
+            >
+              
+             {markers.map((marker,index) => ( 
+             <Marker coordinate={marker} key={index}><Image source={require('../assets/pin.png')} style={{width:24, height:24, resizeMode:'contain'}}></Image></Marker>))}
+             <Polyline
+             coordinates={markers}
+             strokeColor="#0085FF"
+             strokeWidth={3}>
+
+             </Polyline>
+             <Marker coordinate={markers[0]}><Image source={require('../assets/circle.png')} style={{width:24, height:24, resizeMode:'contain'}}></Image></Marker>
+            </MapView>
+          </View>
+        </View>
+        
         <FAB.Group
           open={open}
           color="#FFF"
@@ -74,7 +101,7 @@ export default function ViewMap({route}) {
               icon: 'alert-plus',
               color:'#0085FF',
               label: 'Report an incident',
-              onPress: () => console.log('Incident'),
+              onPress: () => navigation.navigate('ReportIncident'),
             },
           ]}
           onStateChange={onStateChange}
@@ -115,7 +142,7 @@ const styles = StyleSheet.create({
         position:'relative',
         backgroundColor:'#F2F3F5',
         alignContent:'center',
-        marginTop:'2.5%',
+        marginTop:'40%',
         borderRadius:20,
       },
     map: {

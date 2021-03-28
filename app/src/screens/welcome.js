@@ -18,8 +18,8 @@ export default function Welcome() {
       });
       useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('SetMap');
-        }, 3000);
+            navigation.navigate('Join');
+        }, 1000);
       },[]);
 
       if (!fontLoaded) {

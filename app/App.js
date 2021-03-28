@@ -6,6 +6,10 @@ import Welcome from './src/screens/welcome';
 import SelectTime from './src/screens/selectTime';
 import SetMap from './src/screens/setMap';
 import ViewMap from './src/screens/viewMap';
+import ReportIncident from './src/screens/reportIncident';
+import Join from './src/screens/join';
+import SafeWalker from './src/screens/safewalker';
+import SignUpWalker from './src/screens/signupWalker';
 
 
 
@@ -23,6 +27,21 @@ function MyStack() {
         options={{ headerShown: false}} 
       />
       <Stack.Screen 
+        name="Join" 
+        component={Join} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="SafeWalker" 
+        component={SafeWalker} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="SignUpWalker" 
+        component={SignUpWalker} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
         name="SelectTime" 
         component={SelectTime} 
         options={{ headerShown: false}} 
@@ -35,6 +54,11 @@ function MyStack() {
       <Stack.Screen 
         name="ViewMap" 
         component={ViewMap} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="ReportIncident" 
+        component={ReportIncident} 
         options={{ headerShown: false}} 
       />
       
