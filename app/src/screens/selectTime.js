@@ -26,7 +26,7 @@ export default function SelectTime({route}) {
               setStopText2(stopText);
           }
           setTimeout(() => {
-            navigation.navigate('ViewMap',{origin,stop,destination});
+            navigation.navigate('ViewMap',{origin,stop,destination,walker:false});
           }, 2000);
           
       })

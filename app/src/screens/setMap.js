@@ -67,6 +67,7 @@ export default function SetMap() {
             navigation.navigate('SelectTime',{originText:`${origin.latlng.latitude.toString()},${origin.latlng.longitude.toString()}`, origin:origin,
             stopText:`${stop.latlng.latitude.toString()},${stop.latlng.longitude.toString()}`, stop:stop, skip:skip,
             destinationText:`${destination.latlng.latitude.toString()},${destination.latlng.longitude.toString()}`, destination:destination});
+            setStep(0);
         }
         
     },[step]);

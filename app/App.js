@@ -13,6 +13,7 @@ import SignUpWalker from './src/screens/signupWalker';
 import LoginWalker from './src/screens/loginWalker';
 import WalkerHome from './src/screens/walkerHome';
 import WalkerMap from './src/screens/walkerMap';
+import FindWalkerHome from './src/screens/findWalkerHome';
 
 
 
@@ -72,6 +73,11 @@ function MyStack() {
       <Stack.Screen 
         name="ViewMap" 
         component={ViewMap} 
+        options={{ headerShown: false}} 
+      />
+      <Stack.Screen 
+        name="FindWalkerHome" 
+        component={FindWalkerHome} 
         options={{ headerShown: false}} 
       />
       <Stack.Screen 

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Line, Circle } from 'react-native-svg';
-import { colors, Icon } from 'react-native-elements'
+import { colors, Icon , Rating, AirbnbRating} from 'react-native-elements'
 import { useFonts } from 'expo-font';
 import MapView, { Marker, Polygon, Polyline } from 'react-native-maps'
 import * as Location from 'expo-location';
-import { FAB, Portal, Provider } from 'react-native-paper';
+import {Modal, FAB, Portal, Provider, Avatar } from 'react-native-paper';
+import QRCode from 'react-native-qrcode-svg';
 
 
 
@@ -18,14 +19,18 @@ export default function ViewMap({route}) {
         AR: require('../assets/fonts/AR.otf'),
 
       });
-    const { origin, stop, destination } = route.params;
+    const { origin, stop, destination, walker } = route.params;
     const [markers,setMarkers] = useState([origin.latlng,stop.latlng,destination.latlng]);
     const [locText,setLocText] = useState('Text SafeWalk Bot for directions at if you do not have an active internet connection at +1 (111) 123-4567');
     const [state, setState] = useState({ open: false });
     const onStateChange = ({ open }) => setState({ open });
     const { open } = state;
-    
-    
+    const [visible, setVisible] = useState(false);
+      const showModal = () => {setVisible(true);}
+      const hideModal = () => {setVisible(false);}
+    const  ratingCompleted = (rating) => {
+        console.log("Rating is: " + rating)
+      }
  
 
 
@@ -74,6 +79,7 @@ export default function ViewMap({route}) {
 
              </Polyline>
              <Marker coordinate={markers[0]}><Image source={require('../assets/circle.png')} style={{width:24, height:24, resizeMode:'contain'}}></Image></Marker>
+             {walker &&<Marker coordinate={markers[1]}><Avatar.Image source={{uri:'https://static.wikia.nocookie.net/brooklynnine-nine/images/8/88/S7_Andy_Samberg_-_Jake_Peralta.png/revision/latest/top-crop/width/360/height/360?cb=20200312165943'}}  size={24}></Avatar.Image></Marker>}
             </MapView>
           </View>
         </View>
@@ -86,10 +92,10 @@ export default function ViewMap({route}) {
           actions={[
             
             {
-              icon: 'account-star',
+              icon: walker? 'barcode-scan': 'account-star',
               color:'#0085FF',
-              label: 'Find a SafeWalker',
-              onPress: () => console.log('SafeWalker'),
+              label: walker? 'End Walk': 'Find a SafeWalker' ,
+              onPress: () => {if(!walker){navigation.navigate('FindWalkerHome')}else{showModal();}},
             },
             {
               icon: 'email',
@@ -111,6 +117,24 @@ export default function ViewMap({route}) {
             }
           }}
         />
+         <Modal visible={visible} onDismiss={hideModal} 
+         contentContainerStyle={{borderRadius:10, height:300, width:'80%', borderColor:'#83C3FF', backgroundColor:'#FFF' ,elevation:3, alignSelf:'center', marginTop:'20%', alignContent:'center'}}>
+          <Text style={{fontFamily:'AR', fontSize:20, textAlign:'center', color:'#FFF'}}>Scan the QR code to end walk</Text>
+          <View style={{alignSelf:'center', marginTop:'5%'}}><QRCode
+          backgroundColor='transparent'
+          color='#83C3FF'  
+      value="LAHACKSTEAMZERO"
+    /></View>
+         
+    <Rating
+      
+      showRating
+      onFinishRating={ratingCompleted}
+      style={{ paddingVertical: 10 }}
+    />
+    <TouchableOpacity onPress={()=>navigation.navigate('SetMap')}><Text style={{width:'70%', borderRadius:10, paddingHorizontal:'5%', fontFamily:'AR', color:'#83C3FF', backgroundColor:'#FFF', 
+    borderColor:'#83C3FF', borderWidth:1, alignSelf:'center', textAlign:'center', paddingVertical:'2.5%'}}> Rate and Exit</Text></TouchableOpacity>
+        </Modal>
       </Portal>
     </Provider>
          
